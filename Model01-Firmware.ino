@@ -75,6 +75,9 @@
 // Support for USB quirks, like changing the key state report protocol
 #include "Kaleidoscope-USB-Quirks.h"
 
+#include "Kaleidoscope-Heatmap.h"
+
+
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
   * The names aren't particularly important. What is important is that each
   * is unique.
@@ -142,7 +145,7 @@ enum { MACRO_VERSION_INFO,
   *
   */
 
-enum { PRIMARY, FUNCTION, NUMPAD }; // layers
+enum { PRIMARY, FUNCTION, NUMPAD, MOUSE }; // layers
 
 
 /**
@@ -262,7 +265,7 @@ KEYMAPS(
 #define Key_RightAngleBracket LSHIFT(Key_Period)
 
   [FUNCTION] =  KEYMAP_STACKED
-  (___,  Key_F1,                Key_F2,                 Key_F3,                Key_F4,                 Key_F5,           Key_LEDEffectNext,
+  (LockLayer(MOUSE),  Key_F1,                Key_F2,                 Key_F3,                Key_F4,                 Key_F5,           Key_LEDEffectNext,
    ___,  Key_Underscore,        Key_Plus,               Key_LeftCurlyBracket,  Key_RightCurlyBracket,  Key_DoubleQuote,  ___,
    ___,  Key_Minus,             Key_Equals,             Key_LeftParen,         Key_RightParen,         Key_Quote,
    ___,  Key_LeftAngleBracket,  Key_RightAngleBracket,  Key_LeftBracket,       Key_RightBracket,       Key_Pipe,         ___,
@@ -277,6 +280,22 @@ KEYMAPS(
      ___),
 
   [NUMPAD] =  KEYMAP_STACKED
+  (___,  ___,  LSHIFT(Key_9),  LSHIFT(Key_8),  LSHIFT(Key_7),  ___,  ___,
+   ___,  ___,  LSHIFT(Key_6),  LSHIFT(Key_5),  LSHIFT(Key_4),  ___,  ___,
+   ___,  ___,  LSHIFT(Key_3),  LSHIFT(Key_2),  LSHIFT(Key_1),  ___,
+   ___,  ___,  ___,            ___,            ___,            ___,  ___,
+   /*x,  x,    x,              */___,          ___,            ___,  ___,
+   /*x,  x,    x,              x,              x,              x,    */___,
+
+
+     M(MACRO_VERSION_INFO),  ___,    Key_7,  Key_8,       Key_9,               Key_KeypadSubtract,  ___,
+     ___,                    ___,    Key_4,  Key_5,       Key_6,               Key_KeypadAdd,       ___,
+     /*dead ,                */___,  Key_1,  Key_2,       Key_3,               Key_Equals,          ___,
+     ___,                    ___,    Key_0,  Key_Period,  Key_KeypadMultiply,  Key_KeypadDivide,    Key_Enter,
+     ___,                    ___,    ___,    ___,
+     ___),
+
+  [MOUSE] = KEYMAP_STACKED
   (___,       ___,              ___,          ___,            ___,            ___,               ___,
    Key_Tab,   ___,              ___,          Key_mouseBtnL,  Key_mouseBtnR,  Key_mouseWarpEnd,  Key_mouseWarpNE,
    Key_Home,  Key_mouseL,       Key_mouseUp,  Key_mouseDn,    Key_mouseR,     Key_mouseWarpNW,
@@ -284,13 +303,12 @@ KEYMAPS(
    ___,       Key_Delete,       ___,          ___,
    ___,
 
-     M(MACRO_VERSION_INFO),  ___,    Key_7,  Key_8,       Key_9,               Key_KeypadSubtract,  ___,
-     ___,                    ___,    Key_4,  Key_5,       Key_6,               Key_KeypadAdd,       ___,
-     /*dead ,                */___,  Key_1,  Key_2,       Key_3,               Key_Equals,          ___,
-     ___,                    ___,    Key_0,  Key_Period,  Key_KeypadMultiply,  Key_KeypadDivide,    Key_Enter,
-     ___,                    ___,    ___,    ___,
+     ___,      ___,    ___,  ___,  ___,  ___,  ___,
+     ___,      ___,    ___,  ___,  ___,  ___,  ___,
+     /*dead ,  */___,  ___,  ___,  ___,  ___,  ___,
+     ___,      ___,    ___,  ___,  ___,  ___,  ___,
+     ___,      ___,    ___,  ___,
      ___)
-
 #else
   [FUNCTION] =  KEYMAP_STACKED
   (___,      Key_F1,           Key_F2,      Key_F3,     Key_F4,        Key_F5,           Key_CapsLock,
@@ -320,7 +338,22 @@ KEYMAPS(
                            ___, Key_1, Key_2,      Key_3,              Key_Equals,         ___,
    ___,                    ___, Key_0, Key_Period, Key_KeypadMultiply, Key_KeypadDivide,   Key_Enter,
    ___, ___, ___, ___,
-   ___)
+   ___),
+
+  [MOUSE] = KEYMAP_STACKED
+  (___,  ___,  ___,  ___,    ___,  ___,  ___,
+   ___,  ___,  ___,  ___,    ___,  ___,  ___,
+   ___,  ___,  ___,  ___,    ___,  ___,
+   ___,  ___,  ___,  ___,    ___,  ___,  ___,
+   /*x,  x,    x,    */___,  ___,  ___,  ___,
+   /*x,  x,    x,    x,      x,    x,    */___,
+
+     ___,      ___,    ___,  ___,  ___,  ___,  ___,
+     ___,      ___,    ___,  ___,  ___,  ___,  ___,
+     /*dead ,  */___,  ___,  ___,  ___,  ___,  ___,
+     ___,      ___,    ___,  ___,  ___,  ___,  ___,
+     ___,      ___,    ___,  ___,
+     ___)
 #endif
 ) // KEYMAPS(
 
@@ -444,6 +477,13 @@ USE_MAGIC_COMBOS({.action = toggleKeyboardProtocol,
                   .keys = { R3C6, R2C6, R3C7 }
                  });
 
+static const cRGB heat_colors[] PROGMEM = {
+  {  0,   0,   0}, // black
+  {255,  25,  25}, // blue
+  { 25, 255,  25}, // green
+  { 25,  25, 255}  // red
+};
+
 // First, tell Kaleidoscope which plugins you want to use.
 // The order can be important. For example, LED effects are
 // added in the order they're listed here.
@@ -511,6 +551,7 @@ KALEIDOSCOPE_INIT_PLUGINS(
   // keyboard's LEDs as a display
   //AlphaSquareEffect,
 
+  HeatmapEffect,
   // The LED Palette Theme plugin provides a shared palette for other plugins,
   // like Colormap below
   LEDPaletteTheme,
@@ -536,6 +577,7 @@ KALEIDOSCOPE_INIT_PLUGINS(
   // actions - a bit like Macros, but triggered by pressing multiple keys at the
   // same time.
   MagicCombo,
+
 
   // The USBQuirks plugin lets you do some things with USB that we aren't
   // comfortable - or able - to do automatically, but can be useful
@@ -585,6 +627,9 @@ void setup() {
   // maps for. To make things simple, we set it to five layers, which is how
   // many editable layers we have (see above).
   ColormapEffect.max_layers(5);
+
+  HeatmapEffect.heat_colors = heat_colors;
+  HeatmapEffect.heat_colors_length = 4;
 }
 
 /** loop is the second of the standard Arduino sketch functions.

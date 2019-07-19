@@ -520,8 +520,9 @@ KALEIDOSCOPE_INIT_PLUGINS(
   // We start with the LED effect that turns off all the LEDs.
   //LEDOff,
 
+  HeatmapEffect,
   // The stalker effect lights up the keys you've pressed recently
-  StalkerEffect,
+  //StalkerEffect,
 
   // The rainbow effect changes the color of all of the keyboard's keys at the same time
   // running through all the colors of the rainbow.
@@ -537,12 +538,12 @@ KALEIDOSCOPE_INIT_PLUGINS(
 
   // These static effects turn your keyboard's LEDs a variety of colors
   //solidRed,
-  solidOrange,
+  //solidOrange,
   //solidYellow,
   solidGreen,
   //solidBlue,
   //solidIndigo,
-  solidViolet,
+  //solidViolet,
 
   // The breathe effect slowly pulses all of the LEDs on your keyboard
   LEDBreatheEffect,
@@ -551,7 +552,6 @@ KALEIDOSCOPE_INIT_PLUGINS(
   // keyboard's LEDs as a display
   //AlphaSquareEffect,
 
-  HeatmapEffect,
   // The LED Palette Theme plugin provides a shared palette for other plugins,
   // like Colormap below
   LEDPaletteTheme,

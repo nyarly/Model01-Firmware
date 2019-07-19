@@ -1,0 +1,10 @@
+\ as vim leader on PgUp
+Tab back on tab
+Esc on led
+led on special/numlock
+
+Use cmd as shift-to-numlock
+
+mouse layer? would like lh symbols back
+
+

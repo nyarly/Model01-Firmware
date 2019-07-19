@@ -1,0 +1,2 @@
+session_name keyboardio
+export ARDUINO_PATH=/nix/store/51sp11a3k9wlgih637dfmyj8jjva7fkl-arduino-1.8.5/share/arduino

@@ -77,6 +77,8 @@
 
 #include "Kaleidoscope-Heatmap.h"
 
+#include <Kaleidoscope-LEDEffect-FunctionalColor.h>
+kaleidoscope::plugin::LEDFunctionalColor::FunctionalColor funColor;
 
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
   * The names aren't particularly important. What is important is that each
@@ -540,14 +542,15 @@ KALEIDOSCOPE_INIT_PLUGINS(
   //solidRed,
   //solidOrange,
   //solidYellow,
-  solidGreen,
+  //solidGreen,
   //solidBlue,
   //solidIndigo,
   //solidViolet,
 
   // The breathe effect slowly pulses all of the LEDs on your keyboard
-  LEDBreatheEffect,
+  //LEDBreatheEffect,
 
+  funColor, // function color plugin
   // The AlphaSquare effect prints each character you type, using your
   // keyboard's LEDs as a display
   //AlphaSquareEffect,
@@ -557,11 +560,11 @@ KALEIDOSCOPE_INIT_PLUGINS(
   LEDPaletteTheme,
 
   // The Colormap effect makes it possible to set up per-layer colormaps
-  ColormapEffect,
+  //ColormapEffect,
 
   // The numpad plugin is responsible for lighting up the 'numpad' mode
   // with a custom LED effect
-  NumPad,
+  //NumPad,
 
   // The macros plugin adds support for macros
   Macros,

@@ -273,14 +273,14 @@ KEYMAPS(
    ___,  Key_Underscore,        Key_Plus,               Key_LeftCurlyBracket,  Key_RightCurlyBracket,  Key_DoubleQuote,  ___,
    ___,  Key_Minus,             Key_Equals,             Key_LeftParen,         Key_RightParen,         Key_Quote,
    ___,  Key_LeftAngleBracket,  Key_RightAngleBracket,  Key_LeftBracket,       Key_RightBracket,       Key_Pipe,         ___,
-   ___,  ___,                   ___,                    ShiftToLayer(NUMPAD),
+   ShiftToLayer(NUMPAD),        ___,                    ___,                   ___,
    ___,
 
      Consumer_ScanPreviousTrack,  Key_F6,           Key_F7,                    Key_F8,                    Key_F9,          Key_F10,           Key_F11,
      Consumer_PlaySlashPause,     Key_Home,         Key_PageDown,              Key_PageUp,                Key_End,         Key_RightBracket,  Key_F12,
      /*dead ,                     */Key_LeftArrow,  Key_DownArrow,             Key_UpArrow,               Key_RightArrow,  ___,               ___,
      Consumer_ScanNextTrack,      Consumer_Mute,    Consumer_VolumeDecrement,  Consumer_VolumeIncrement,  ___,             Key_Backslash,     Key_Pipe,
-     ShiftToLayer(NUMPAD),        ___,              Key_Delete,                ___,
+     ___,                         Key_Delete,       ___,                       ShiftToLayer(NUMPAD),
      ___),
 
   [NUMPAD] =  KEYMAP_STACKED

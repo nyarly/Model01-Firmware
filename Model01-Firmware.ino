@@ -280,7 +280,7 @@ KEYMAPS(
      Consumer_PlaySlashPause,     Key_Home,         Key_PageDown,              Key_PageUp,                Key_End,         Key_RightBracket,  Key_F12,
      /*dead ,                     */Key_LeftArrow,  Key_DownArrow,             Key_UpArrow,               Key_RightArrow,  ___,               ___,
      Consumer_ScanNextTrack,      Consumer_Mute,    Consumer_VolumeDecrement,  Consumer_VolumeIncrement,  ___,             Key_Backslash,     Key_Pipe,
-     ___,                         Key_Delete,       ___,                       ShiftToLayer(NUMPAD),
+     ___,                         ___,              Key_Delete,                ShiftToLayer(NUMPAD),
      ___),
 
   [NUMPAD] =  KEYMAP_STACKED

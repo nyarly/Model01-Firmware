@@ -47,7 +47,7 @@ mkdir -p hardware
 
 ## then clone the hardware definitions to make them available to the arduino environment
 git clone --recursive https://github.com/keyboardio/Kaleidoscope-Bundle-Keyboardio.git hardware/keyboardio
-````
+```
 
 
 ## Download the Model 01 Firmware

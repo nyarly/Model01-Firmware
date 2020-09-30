@@ -199,30 +199,28 @@ Ergodox.
    Key_Backslash,           Key_A,         Key_S,        Key_D,          Key_F,  Key_G,
    Key_LeftGui,             Key_Z,         Key_X,        Key_C,          Key_V,  Key_B,  Key_LeftGui,
    /*btm row*/    Key_LeftShift,           Key_Spacebar,  Key_Enter,  Key_LeftControl,
-   ShiftToLayer(FUNCTION),
-   //M(MACRO_LAYERSHIFT),
+   M(MACRO_LAYERSHIFT),
 
      LCTRL(Key_A),             Key_6,        Key_7,          Key_8,           Key_9,       Key_0,          LockLayer(NUMPAD),
      Key_Enter,                Key_Y,        Key_U,          Key_I,           Key_O,       Key_P,          Key_Equals,
      /*dead ,                  */Key_H,      Key_J,          Key_K,           Key_L,       Key_Semicolon,  Key_Quote,
      Key_RightGui,             Key_N,        Key_M,          Key_Comma,       Key_Period,  Key_Slash,      Key_Minus,
      Key_RightControl,         Key_LeftAlt,  Key_Backspace,  Key_RightShift,
-     ShiftToLayer(FUNCTION)),
-     //M(MACRO_LAYERSHIFT)),
+     M(MACRO_LAYERSHIFT)),
 
   [FUNCTION] =  KEYMAP_STACKED
-  (LockLayer(MOUSE),      Key_F1,          Key_F2,          Key_F3,                Key_F4,                 Key_F5,           Key_LEDEffectNext,
-   ___,                   Key_Underscore,  Key_Plus,        Key_LeftCurlyBracket,  Key_RightCurlyBracket,  Key_DoubleQuote,  ___,
-   ___,                   Key_Minus,       Key_Equals,      Key_LeftParen,         Key_RightParen,         Key_Quote,
-   ___,                   Key_LeftAngle,   Key_RightAngle,  Key_LeftBracket,       Key_RightBracket,       Key_Pipe,         ___,
-   ShiftToLayer(NUMPAD),  ___,             ___,             ___,
+  (LockLayer(MOUSE),  Key_F1,          Key_F2,          Key_F3,                Key_F4,                 Key_F5,           Key_LEDEffectNext,
+   ___,               Key_Underscore,  Key_Plus,        Key_LeftCurlyBracket,  Key_RightCurlyBracket,  Key_DoubleQuote,  ___,
+   ___,               Key_Minus,       Key_Equals,      Key_LeftParen,         Key_RightParen,         Key_Quote,
+   ___,               Key_LeftAngle,   Key_RightAngle,  Key_LeftBracket,       Key_RightBracket,       Key_Pipe,         ___,
+   ___,               ___,             ___,             ___,
    ___,
 
      Consumer_ScanPreviousTrack,  Key_F6,           Key_F7,                    Key_F8,                    Key_F9,          Key_F10,           Key_F11,
      Consumer_PlaySlashPause,     Key_Home,         Key_PageDown,              Key_PageUp,                Key_End,         Key_RightBracket,  Key_F12,
      /*dead ,                     */Key_LeftArrow,  Key_DownArrow,             Key_UpArrow,               Key_RightArrow,  ___,               ___,
      Consumer_ScanNextTrack,      Consumer_Mute,    Consumer_VolumeDecrement,  Consumer_VolumeIncrement,  ___,             Key_Backslash,     Key_Pipe,
-     ___,                         ___,              Key_Delete,                ShiftToLayer(NUMPAD),
+     ___,                         ___,              Key_Delete,                ___,
      ___),
 
   [NUMPAD] =  KEYMAP_STACKED
@@ -298,19 +296,32 @@ static void numoutMacro(uint8_t keyState) {
 }
 
 static void layerShiftMacro(uint8_t keyState) {
-/*
-  if (kaleidoscope::Runtime.device().isKeyswitchPressed(KeyAddr(0,7)) ||
+  bool isShift = false;
+  bool wasShift = false;
+
+  if (
+      kaleidoscope::Runtime.device().isKeyswitchPressed(KeyAddr(0,7)) ||
       kaleidoscope::Runtime.device().isKeyswitchPressed(KeyAddr(0,8))) {
-    Macros.play(MACRO(Tr(ShiftToLayer(NUMPAD))));
-  } else {
-    Macros.play(MACRO(Tr(ShiftToLayer(FUNCTION))));
+      isShift = true;
+  } else if (
+      kaleidoscope::Runtime.device().wasKeyswitchPressed(KeyAddr(0,7)) ||
+      kaleidoscope::Runtime.device().wasKeyswitchPressed(KeyAddr(0,8))) {
+      wasShift = true;
   }
-  */
 
   if (keyIsPressed(keyState)) {
-    if (!Layer.isActive(FUNCTION))
-      Layer.activate(FUNCTION);
+    if (wasShift) {
+      Layer.deactivate(NUMPAD);
+    }
+    if (isShift) {
+      if (!Layer.isActive(NUMPAD))
+        Layer.activate(NUMPAD);
+    } else {
+      if (!Layer.isActive(FUNCTION))
+        Layer.activate(FUNCTION);
+    }
   } else if (keyToggledOff(keyState)) {
+    Layer.deactivate(NUMPAD);
     Layer.deactivate(FUNCTION);
   }
 }

@@ -99,7 +99,8 @@ kaleidoscope::plugin::LEDFunctionalColor::FunctionalColor funColor;
 
 enum { MACRO_VERSION_INFO,
        MACRO_ANY,
-       MACRO_NUMOUT
+       MACRO_NUMOUT,
+       MACRO_LAYERSHIFT
      };
 
 
@@ -179,59 +180,13 @@ enum { PRIMARY, FUNCTION, NUMPAD, MOUSE }; // layers
  */
 // *INDENT-OFF*
 
+#define Key_Underscore LSHIFT(Key_Minus)
+#define Key_Plus LSHIFT(Key_Equals)
+#define Key_DoubleQuote LSHIFT(Key_Quote)
+#define Key_LeftAngle LSHIFT(Key_Comma)
+#define Key_RightAngle LSHIFT(Key_Period)
+
 KEYMAPS(
-
-#if defined (PRIMARY_KEYMAP_QWERTY)
-  [PRIMARY] = KEYMAP_STACKED
-  (___,          Key_1, Key_2, Key_3, Key_4, Key_5, Key_LEDEffectNext,
-   Key_Backtick, Key_Q, Key_W, Key_E, Key_R, Key_T, Key_Tab,
-   Key_PageUp,   Key_A, Key_S, Key_D, Key_F, Key_G,
-   Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, Key_Escape,
-   Key_LeftControl, Key_Backspace, Key_LeftGui, Key_LeftShift,
-   ShiftToLayer(FUNCTION),
-
-   M(MACRO_ANY),  Key_6, Key_7, Key_8,     Key_9,         Key_0,         LockLayer(NUMPAD),
-   Key_Enter,     Key_Y, Key_U, Key_I,     Key_O,         Key_P,         Key_Equals,
-                  Key_H, Key_J, Key_K,     Key_L,         Key_Semicolon, Key_Quote,
-   Key_RightAlt,  Key_N, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
-   Key_RightShift, Key_LeftAlt, Key_Spacebar, Key_RightControl,
-   ShiftToLayer(FUNCTION)),
-
-#elif defined (PRIMARY_KEYMAP_DVORAK)
-
-  [PRIMARY] = KEYMAP_STACKED
-  (___,          Key_1,         Key_2,     Key_3,      Key_4, Key_5, Key_LEDEffectNext,
-   Key_Backtick, Key_Quote,     Key_Comma, Key_Period, Key_P, Key_Y, Key_Tab,
-   Key_PageUp,   Key_A,         Key_O,     Key_E,      Key_U, Key_I,
-   Key_PageDown, Key_Semicolon, Key_Q,     Key_J,      Key_K, Key_X, Key_Escape,
-   Key_LeftControl, Key_Backspace, Key_LeftGui, Key_LeftShift,
-   ShiftToLayer(FUNCTION),
-
-   M(MACRO_ANY),   Key_6, Key_7, Key_8, Key_9, Key_0, LockLayer(NUMPAD),
-   Key_Enter,      Key_F, Key_G, Key_C, Key_R, Key_L, Key_Slash,
-                   Key_D, Key_H, Key_T, Key_N, Key_S, Key_Minus,
-   Key_RightAlt,   Key_B, Key_M, Key_W, Key_V, Key_Z, Key_Equals,
-   Key_RightShift, Key_LeftAlt, Key_Spacebar, Key_RightControl,
-   ShiftToLayer(FUNCTION)),
-
-#elif defined (PRIMARY_KEYMAP_COLEMAK)
-
-  [PRIMARY] = KEYMAP_STACKED
-  (___,          Key_1, Key_2, Key_3, Key_4, Key_5, Key_LEDEffectNext,
-   Key_Backtick, Key_Q, Key_W, Key_F, Key_P, Key_G, Key_Tab,
-   Key_PageUp,   Key_A, Key_R, Key_S, Key_T, Key_D,
-   Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, Key_Escape,
-   Key_LeftControl, Key_Backspace, Key_LeftGui, Key_LeftShift,
-   ShiftToLayer(FUNCTION),
-
-   M(MACRO_ANY),  Key_6, Key_7, Key_8,     Key_9,         Key_0,         LockLayer(NUMPAD),
-   Key_Enter,     Key_J, Key_L, Key_U,     Key_Y,         Key_Semicolon, Key_Equals,
-                  Key_H, Key_N, Key_E,     Key_I,         Key_O,         Key_Quote,
-   Key_RightAlt,  Key_K, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
-   Key_RightShift, Key_LeftAlt, Key_Spacebar, Key_RightControl,
-   ShiftToLayer(FUNCTION)),
-
-#elif defined (PRIMARY_KEYMAP_CUSTOM)
 /*
 Trying out my goofy layout
 It's very much better than it was before.
@@ -245,6 +200,7 @@ Ergodox.
    Key_LeftGui,             Key_Z,         Key_X,        Key_C,          Key_V,  Key_B,  Key_LeftGui,
    /*btm row*/    Key_LeftShift,           Key_Spacebar,  Key_Enter,  Key_LeftControl,
    ShiftToLayer(FUNCTION),
+   //M(MACRO_LAYERSHIFT),
 
      LCTRL(Key_A),             Key_6,        Key_7,          Key_8,           Key_9,       Key_0,          LockLayer(NUMPAD),
      Key_Enter,                Key_Y,        Key_U,          Key_I,           Key_O,       Key_P,          Key_Equals,
@@ -252,36 +208,21 @@ Ergodox.
      Key_RightGui,             Key_N,        Key_M,          Key_Comma,       Key_Period,  Key_Slash,      Key_Minus,
      Key_RightControl,         Key_LeftAlt,  Key_Backspace,  Key_RightShift,
      ShiftToLayer(FUNCTION)),
-
-#else
-
-#error "No default keymap defined. You should make sure that you have a line like '#define PRIMARY_KEYMAP_QWERTY' in your sketch"
-
-#endif
-
-#define JDL_SPECIALS
-
-#if defined (JDL_SPECIALS)
-
-#define Key_Underscore LSHIFT(Key_Minus)
-#define Key_Plus LSHIFT(Key_Equals)
-#define Key_DoubleQuote LSHIFT(Key_Quote)
-#define Key_LeftAngleBracket LSHIFT(Key_Comma)
-#define Key_RightAngleBracket LSHIFT(Key_Period)
+     //M(MACRO_LAYERSHIFT)),
 
   [FUNCTION] =  KEYMAP_STACKED
-  (LockLayer(MOUSE),  Key_F1,                Key_F2,                 Key_F3,                Key_F4,                 Key_F5,           Key_LEDEffectNext,
-   ___,  Key_Underscore,        Key_Plus,               Key_LeftCurlyBracket,  Key_RightCurlyBracket,  Key_DoubleQuote,  ___,
-   ___,  Key_Minus,             Key_Equals,             Key_LeftParen,         Key_RightParen,         Key_Quote,
-   ___,  Key_LeftAngleBracket,  Key_RightAngleBracket,  Key_LeftBracket,       Key_RightBracket,       Key_Pipe,         ___,
-   ShiftToLayer(NUMPAD),        ___,                    ___,                   ___,
+  (LockLayer(MOUSE),      Key_F1,          Key_F2,          Key_F3,                Key_F4,                 Key_F5,           Key_LEDEffectNext,
+   ___,                   Key_Underscore,  Key_Plus,        Key_LeftCurlyBracket,  Key_RightCurlyBracket,  Key_DoubleQuote,  ___,
+   ___,                   Key_Minus,       Key_Equals,      Key_LeftParen,         Key_RightParen,         Key_Quote,
+   ___,                   Key_LeftAngle,   Key_RightAngle,  Key_LeftBracket,       Key_RightBracket,       Key_Pipe,         ___,
+   ShiftToLayer(NUMPAD),  ___,             ___,             ___,
    ___,
 
      Consumer_ScanPreviousTrack,  Key_F6,           Key_F7,                    Key_F8,                    Key_F9,          Key_F10,           Key_F11,
      Consumer_PlaySlashPause,     Key_Home,         Key_PageDown,              Key_PageUp,                Key_End,         Key_RightBracket,  Key_F12,
      /*dead ,                     */Key_LeftArrow,  Key_DownArrow,             Key_UpArrow,               Key_RightArrow,  ___,               ___,
      Consumer_ScanNextTrack,      Consumer_Mute,    Consumer_VolumeDecrement,  Consumer_VolumeIncrement,  ___,             Key_Backslash,     Key_Pipe,
-     ___,                         ___,              Key_Delete,                ___,
+     ___,                         ___,              Key_Delete,                ShiftToLayer(NUMPAD),
      ___),
 
   [NUMPAD] =  KEYMAP_STACKED
@@ -314,52 +255,6 @@ Ergodox.
      ___,      ___,    ___,  ___,  ___,  ___,  ___,
      ___,      ___,    ___,  ___,
      ___)
-#else
-  [FUNCTION] =  KEYMAP_STACKED
-  (___,      Key_F1,           Key_F2,      Key_F3,     Key_F4,        Key_F5,           Key_CapsLock,
-   Key_Tab,  ___,              Key_mouseUp, ___,        Key_mouseBtnR, Key_mouseWarpEnd, Key_mouseWarpNE,
-   Key_Home, Key_mouseL,       Key_mouseDn, Key_mouseR, Key_mouseBtnL, Key_mouseWarpNW,
-   Key_End,  Key_PrintScreen,  Key_Insert,  ___,        Key_mouseBtnM, Key_mouseWarpSW,  Key_mouseWarpSE,
-   ___, Key_Enter, ___, ___,
-   ___,
-
-   Consumer_ScanPreviousTrack, Key_F6,                 Key_F7,                   Key_F8,                   Key_F9,          Key_F10,          Key_F11,
-   Consumer_PlaySlashPause,    Consumer_ScanNextTrack, Key_LeftCurlyBracket,     Key_RightCurlyBracket,    Key_LeftBracket, Key_RightBracket, Key_F12,
-                               Key_LeftArrow,          Key_DownArrow,            Key_UpArrow,              Key_RightArrow,  ___,              ___,
-   Key_PcApplication,          Consumer_Mute,          Consumer_VolumeDecrement, Consumer_VolumeIncrement, ___,             Key_Backslash,    Key_Pipe,
-   ShiftToLayer(NUMPAD), ___, Key_Delete, ___,
-   ___),
-
-  [NUMPAD] =  KEYMAP_STACKED
-  (___, ___, ___, ___, ___, ___, ___,
-   ___, ___, ___, ___, ___, ___, ___,
-   ___, ___, ___, ___, ___, ___,
-   ___, ___, ___, ___, ___, ___, ___,
-   ___, ___, ___, ___,
-   ___,
-
-   M(MACRO_VERSION_INFO),  ___, Key_7, Key_8,      Key_9,              Key_KeypadSubtract, ___,
-   ___,                    ___, Key_4, Key_5,      Key_6,              Key_KeypadAdd,      ___,
-                           ___, Key_1, Key_2,      Key_3,              Key_Equals,         ___,
-   ___,                    ___, Key_0, Key_Period, Key_KeypadMultiply, Key_KeypadDivide,   Key_Enter,
-   ___, ___, ___, ___,
-   ___),
-
-  [MOUSE] = KEYMAP_STACKED
-  (___,  ___,  ___,  ___,    ___,  ___,  ___,
-   ___,  ___,  ___,  ___,    ___,  ___,  ___,
-   ___,  ___,  ___,  ___,    ___,  ___,
-   ___,  ___,  ___,  ___,    ___,  ___,  ___,
-   /*x,  x,    x,    */___,  ___,  ___,  ___,
-   /*x,  x,    x,    x,      x,    x,    */___,
-
-     ___,      ___,    ___,  ___,  ___,  ___,  ___,
-     ___,      ___,    ___,  ___,  ___,  ___,  ___,
-     /*dead ,  */___,  ___,  ___,  ___,  ___,  ___,
-     ___,      ___,    ___,  ___,  ___,  ___,  ___,
-     ___,      ___,    ___,  ___,
-     ___)
-#endif
 ) // KEYMAPS(
 
 
@@ -398,6 +293,28 @@ static void anyKeyMacro(uint8_t keyState) {
     Kaleidoscope.hid().keyboard().pressKey(lastKey, toggledOn);
 }
 
+static void numoutMacro(uint8_t keyState) {
+  Macros.play(MACRODOWN(T(Enter), Tr(UnlockLayer(NUMPAD))));
+}
+
+static void layerShiftMacro(uint8_t keyState) {
+/*
+  if (kaleidoscope::Runtime.device().isKeyswitchPressed(KeyAddr(0,7)) ||
+      kaleidoscope::Runtime.device().isKeyswitchPressed(KeyAddr(0,8))) {
+    Macros.play(MACRO(Tr(ShiftToLayer(NUMPAD))));
+  } else {
+    Macros.play(MACRO(Tr(ShiftToLayer(FUNCTION))));
+  }
+  */
+
+  if (keyIsPressed(keyState)) {
+    if (!Layer.isActive(FUNCTION))
+      Layer.activate(FUNCTION);
+  } else if (keyToggledOff(keyState)) {
+    Layer.deactivate(FUNCTION);
+  }
+}
+
 
 /** macroAction dispatches keymap events that are tied to a macro
     to that macro. It takes two uint8_t parameters.
@@ -423,8 +340,13 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
     break;
 
   case MACRO_NUMOUT:
-    Macros.play(MACRODOWN(T(Enter), Tr(UnlockLayer(NUMPAD))));
+    numoutMacro(keyState);
     break;
+
+  case MACRO_LAYERSHIFT:
+    layerShiftMacro(keyState);
+    break;
+
   }
 
   return MACRO_NONE;
@@ -504,13 +426,14 @@ static void enterHardwareTestMode(uint8_t combo_index) {
 }
 
 static void numpadShift(uint8_t combo_index) {
-  Layer.activate(NUMPAD);
+  Macros.play(MACRO(Tr(ShiftToLayer(NUMPAD))));
 }
 
 /** Magic combo list, a list of key combo and action pairs the firmware should
  * recognise.
  */
 USE_MAGIC_COMBOS(
+/*
   {
     .action = numpadShift,
     .keys = { R3C9, R0C8 } // right Fn + Shift
@@ -527,6 +450,7 @@ USE_MAGIC_COMBOS(
     .action = numpadShift,
     .keys = { R3C6, R0C8 } // Left Fn + right Shift
   },
+  */
   {
     .action = toggleKeyboardProtocol,
     .keys = { R3C6, R2C6, R3C7 } // Left Fn + Esc + Shift

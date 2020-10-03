@@ -198,14 +198,14 @@ Ergodox.
    Key_Backtick,            Key_Q,         Key_W,        Key_E,          Key_R,  Key_T,  Key_Tab,
    Key_Backslash,           Key_A,         Key_S,        Key_D,          Key_F,  Key_G,
    Key_LeftGui,             Key_Z,         Key_X,        Key_C,          Key_V,  Key_B,  Key_LeftGui,
-   /*btm row*/    Key_LeftShift,           Key_Spacebar,  Key_Enter,  Key_LeftControl,
+   /*btm row*/    Key_LeftShift,           Key_Spacebar,  Key_LeftAlt,  Key_LeftControl,
    M(MACRO_LAYERSHIFT),
 
      LCTRL(Key_A),             Key_6,        Key_7,          Key_8,           Key_9,       Key_0,          LockLayer(NUMPAD),
      Key_Enter,                Key_Y,        Key_U,          Key_I,           Key_O,       Key_P,          Key_Equals,
      /*dead ,                  */Key_H,      Key_J,          Key_K,           Key_L,       Key_Semicolon,  Key_Quote,
      Key_RightGui,             Key_N,        Key_M,          Key_Comma,       Key_Period,  Key_Slash,      Key_Minus,
-     Key_RightControl,         Key_LeftAlt,  Key_Backspace,  Key_RightShift,
+     Key_RightControl,         Key_RightAlt,  Key_Backspace,  Key_RightShift,
      M(MACRO_LAYERSHIFT)),
 
   [FUNCTION] =  KEYMAP_STACKED
@@ -444,24 +444,6 @@ static void numpadShift(uint8_t combo_index) {
  * recognise.
  */
 USE_MAGIC_COMBOS(
-/*
-  {
-    .action = numpadShift,
-    .keys = { R3C9, R0C8 } // right Fn + Shift
-  },
-  {
-    .action = numpadShift,
-    .keys = { R3C6, R0C7 } // Left Fn + Shift
-  },
-  {
-    .action = numpadShift,
-    .keys = { R3C9, R0C7 } // right Fn + left Shift
-  },
-  {
-    .action = numpadShift,
-    .keys = { R3C6, R0C8 } // Left Fn + right Shift
-  },
-  */
   {
     .action = toggleKeyboardProtocol,
     .keys = { R3C6, R2C6, R3C7 } // Left Fn + Esc + Shift
@@ -525,7 +507,6 @@ KALEIDOSCOPE_INIT_PLUGINS(
   // running through all the colors of the rainbow.
   //LEDRainbowEffect,
 
-  // The rainbow wave effect lights up your keyboard with all the colors of a rainbow
   // and slowly moves the rainbow across your keyboard
   //LEDRainbowWaveEffect,
 
@@ -591,7 +572,7 @@ KALEIDOSCOPE_INIT_PLUGINS(
 void setup() {
   QUKEYS(
     kaleidoscope::plugin::Qukey(0, KeyAddr(2, 6), Key_Enter),
-    kaleidoscope::plugin::Qukey(0, KeyAddr(2, 9), Key_Tab),
+    kaleidoscope::plugin::Qukey(0, KeyAddr(2, 9), Key_Enter),
   )
 
   // First, call Kaleidoscope's internal setup function
@@ -621,6 +602,10 @@ void setup() {
   // This avoids over-taxing devices that don't have a lot of power to share
   // with USB devices
   LEDOff.activate();
+
+  BootAnimationEffect.timeout = 200;
+  BootAnimationEffect.color = {255, 25, 25};
+
 
   // To make the keymap editable without flashing new firmware, we store
   // additional layers in EEPROM. For now, we reserve space for five layers. If

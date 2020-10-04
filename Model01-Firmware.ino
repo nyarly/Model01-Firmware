@@ -296,16 +296,28 @@ static void numoutMacro(uint8_t keyState) {
 }
 
 static void layerShiftMacro(uint8_t keyState) {
+  using kaleidoscope::Runtime;
+
   bool isShift = false;
   bool wasShift = false;
+  KeyAddr leftShift = KeyAddr(0,7);
+  KeyAddr rightShift = KeyAddr(0,8);
 
-  if (
-      kaleidoscope::Runtime.device().isKeyswitchPressed(KeyAddr(0,7)) ||
-      kaleidoscope::Runtime.device().isKeyswitchPressed(KeyAddr(0,8))) {
+  static KeyAddr activeShift;
+
+  if (Runtime.device().wasKeyswitchPressed(leftShift)  && Runtime.device().isKeyswitchPressed(leftShift)) {
+    activeShift = leftShift;
+  } else if (
+      Runtime.device().wasKeyswitchPressed(rightShift) && Runtime.device().isKeyswitchPressed(rightShift)) {
+    activeShift = rightShift;
+  }
+
+  if( Runtime.device().isKeyswitchPressed(KeyAddr(0,7)) ||
+      Runtime.device().isKeyswitchPressed(KeyAddr(0,8))) {
       isShift = true;
   } else if (
-      kaleidoscope::Runtime.device().wasKeyswitchPressed(KeyAddr(0,7)) ||
-      kaleidoscope::Runtime.device().wasKeyswitchPressed(KeyAddr(0,8))) {
+      Runtime.device().wasKeyswitchPressed(KeyAddr(0,7)) ||
+      Runtime.device().wasKeyswitchPressed(KeyAddr(0,8))) {
       wasShift = true;
   }
 
@@ -314,6 +326,8 @@ static void layerShiftMacro(uint8_t keyState) {
       Layer.deactivate(NUMPAD);
     }
     if (isShift) {
+      Runtime.device().maskKey(activeShift);
+
       if (!Layer.isActive(NUMPAD))
         Layer.activate(NUMPAD);
     } else {

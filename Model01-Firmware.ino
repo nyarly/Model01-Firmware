@@ -83,7 +83,6 @@
 #include "Kaleidoscope-Qukeys.h"
 
 kaleidoscope::plugin::LEDFunctionalColor::FunctionalColor funColor;
-
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
   * The names aren't particularly important. What is important is that each
   * is unique.
@@ -175,6 +174,7 @@ enum { PRIMARY, FUNCTION, NUMPAD, MOUSE }; // layers
 #define PRIMARY_KEYMAP_CUSTOM
 
 
+
 /* This comment temporarily turns off astyle's indent enforcement
  *   so we can make the keymaps actually resemble the physical key layout better
  */
@@ -185,8 +185,8 @@ enum { PRIMARY, FUNCTION, NUMPAD, MOUSE }; // layers
 #define Key_DoubleQuote LSHIFT(Key_Quote)
 #define Key_LeftAngle LSHIFT(Key_Comma)
 #define Key_RightAngle LSHIFT(Key_Period)
-
 KEYMAPS(
+
 /*
 Trying out my goofy layout
 It's very much better than it was before.
@@ -372,9 +372,7 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
   case MACRO_LAYERSHIFT:
     layerShiftMacro(keyState);
     break;
-
   }
-
   return MACRO_NONE;
 }
 
@@ -499,6 +497,7 @@ KALEIDOSCOPE_INIT_PLUGINS(
   FocusEEPROMCommand,
 
   Qukeys,
+
   // The hardware test mode, which can be invoked by tapping Prog, LED and the
   // left Fn button at the same time.
   HardwareTestMode,
@@ -510,7 +509,6 @@ KALEIDOSCOPE_INIT_PLUGINS(
   // keyboard is first connected
   // BootGreetingEffect,
   BootAnimationEffect,
-
   // We start with the LED effect that turns off all the LEDs.
   //LEDOff,
 
@@ -572,7 +570,6 @@ KALEIDOSCOPE_INIT_PLUGINS(
   // same time.
   MagicCombo,
 
-
   // The USBQuirks plugin lets you do some things with USB that we aren't
   // comfortable - or able - to do automatically, but can be useful
   // nevertheless. Such as toggling the key report protocol between Boot (used
@@ -589,7 +586,6 @@ void setup() {
     kaleidoscope::plugin::Qukey(0, KeyAddr(2, 6), Key_Enter),
     kaleidoscope::plugin::Qukey(0, KeyAddr(2, 9), Key_Enter),
   )
-
   // First, call Kaleidoscope's internal setup function
   Kaleidoscope.setup();
 
@@ -607,7 +603,6 @@ void setup() {
 
   // Set the action key the test mode should listen for to Left Fn
   HardwareTestMode.setActionKey(R3C6);
-
   // The LED Stalker mode has a few effects. The one we like is called
   // 'BlazingTrail'. For details on other options, see
   // https://github.com/keyboardio/Kaleidoscope/blob/master/docs/plugins/LED-Stalker.md
@@ -620,8 +615,6 @@ void setup() {
 
   BootAnimationEffect.timeout = 200;
   BootAnimationEffect.color = {255, 25, 25};
-
-
   // To make the keymap editable without flashing new firmware, we store
   // additional layers in EEPROM. For now, we reserve space for five layers. If
   // one wants to use these layers, just set the default layer to one in EEPROM,
@@ -633,7 +626,6 @@ void setup() {
   // maps for. To make things simple, we set it to five layers, which is how
   // many editable layers we have (see above).
   ColormapEffect.max_layers(5);
-
   HeatmapEffect.heat_colors = heat_colors;
   HeatmapEffect.heat_colors_length = 4;
 }

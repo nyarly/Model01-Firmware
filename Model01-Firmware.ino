@@ -335,9 +335,10 @@ static void layerShiftMacro(uint8_t keyState) {
         Layer.activate(FUNCTION);
     }
   } else if (keyToggledOff(keyState)) {
-    Layer.deactivate(NUMPAD);
-    Layer.deactivate(FUNCTION);
-  }
+      Runtime.device().unmaskKey(activeShift);
+      Layer.deactivate(NUMPAD);
+      Layer.deactivate(FUNCTION);
+    }
 }
 
 
